@@ -15,7 +15,7 @@ def cond_prob(full_table, the_evidence_column, the_evidence_column_value, the_ta
   t_subset = up_table_subset(table, target, 'equals', target_value)
   e_list = up_get_column(t_subset, evidence)
   p_b_a = sum([1 if v==evidence_value else 0 for v in e_list])/len(e_list)
-  return p_b_a + .01  #Laplace smoothing factor
+  return p_b_a   #Laplace smoothing factor
 
 def cond_probs_product(full_table, evidence_row, target_column, target_column_value):
   assert target_column in full_table
