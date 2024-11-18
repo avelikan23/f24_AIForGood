@@ -31,7 +31,7 @@ def cond_probs_product(full_table, evidence_row, target_column, target_column_va
    a_list= cond_prob(full_table, e, v, target_column, target_column_value)
    p_b_a= a_list
    cond_prob_list+=[p_b_a]
-  cproduct= up_product(cond_prob_list)
+  product= up_product(cond_prob_list)
   return product
 
 def prior_prob(full_table, the_column, the_column_value):
