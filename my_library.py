@@ -54,3 +54,28 @@ def naive_bayes(full_table, evidence_row, target_column):
   neg, pos = compute_probs(p0,p1)
   #return your 2 results in a list
   return [neg,pos]
+
+def metrics(zipped_list):
+  assert isinstance(zipped_list, list)
+  assert all([isinstance(v, list) for v in zipped_list])
+  assert all([len(v)==2 for v in zipped_list])
+  assert all([isinstance(a,(int,float)) and isinstance(b,(int,float)) for a,b in zipped_list]), f'zipped_list contains a non-int or non-float'
+  assert all([float(a) in [0.0,1.0] and float(b) in [0.0,1.0] for a,b in zipped_list]), f'zipped_list contains a non-binary value'
+
+  #first compute the sum of all 4 cases. See code above
+  tn = sum([1 if pair==[0,0] else 0 for pair in zipped_list])
+  tp = sum([1 if pair==[1,1] else 0 for pair in zipped_list])
+  fp = sum([1 if pair==[1,0] else 0 for pair in zipped_list])
+  fn = sum([1 if pair==[0,1] else 0 for pair in zipped_list])
+
+  #now can compute precicision, recall, f1, accuracy. Watch for divide by 0.
+  precision = tp/(tp+fp) if tp+fp else 0
+  recall = tp/(tp+fn) if tp+fn else 0
+  F1 = 2*((precision*recall)/(precision+recall)) if precision+recall else 0
+  accuracy = (tp+tn)/(tp+tn+fp+fn) if tp+tn+fp+fn else 0
+
+  #now build dictionary with the 4 measures - round values to 2 places
+  predict= {'Precision': precision, 'Recall': recall, 'F1': F1, 'Accuracy': accuracy}
+
+  #finally, return the dictionary
+  return predict
