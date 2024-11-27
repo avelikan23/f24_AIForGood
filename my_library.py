@@ -75,7 +75,7 @@ def metrics(zipped_list):
   accuracy = ((tp+tn)/(tp+tn+fp+fn) if (tp+tn+fp+fn) else 0)
 
   #now build dictionary with the 4 measures - round values to 2 places
-  predict= {'Precision': round(precision,2,) 'Recall': round(recall,2), 'F1': round(f1,2), 'Accuracy': round(accuracy,2)}
+  predict= {'Precision': round(precision,2), 'Recall': round(recall,2), 'F1': round(f1,2), 'Accuracy': round(accuracy,2)}
 
   #finally, return the dictionary
   return predict
