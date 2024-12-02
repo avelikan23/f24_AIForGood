@@ -83,20 +83,16 @@ def metrics(zipped_list):
 from sklearn.ensemble import RandomForestClassifier
 
 def run_random_forest(train, test, target, n):
-  #target is target column name
-  #n is number of trees to use
-
-  assert target in train   #have not dropped it yet
-  assert target in test
-
-  #your code below - copy, paste and align from above
   clf = RandomForestClassifier(n_estimators=n, max_depth=2, random_state=0)
-  X = up_drop_column(scaled_train, 'adopted')
-  y = up_get_column(scaled_train,'adopted')
-  assert isinstance(y,list)
-  assert len(y)==len(X)
-
+  X = up_drop_column(train, target)  # Use train, not scaled_train
+  y = up_get_column(train, target)   # Use train, not scaled_train
   clf.fit(X, y)
+
+  k_feature_table = up_drop_column(test, target)  # Use test, not scaled_test
+  k_actuals = up_get_column(test, target)        # Use test, not scaled_test
+  probs = clf.predict_proba(k_feature_table)
+  pos_probs = [p for n,p in probs]
+
   all_mets = []
   for t in thresholds:
     predictions = [1 if pos>t else 0 for pos in pos_probs]
@@ -106,7 +102,6 @@ def run_random_forest(train, test, target, n):
     all_mets = all_mets + [mets]
 
   metrics_table = up_metrics_table(all_mets)
-
   return metrics_table
 
 #I'll give you a start
