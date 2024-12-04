@@ -102,7 +102,7 @@ def run_random_forest(train, test, target, n):
     all_mets = all_mets + [mets]
 
   metrics_table = up_metrics_table(all_mets)
-  return metrics_tablee
+  return metrics_table
 
 #I'll give you a start
 
