@@ -84,14 +84,14 @@ from sklearn.ensemble import RandomForestClassifier
 
 def run_random_forest(train, test, target, n):
   clf = RandomForestClassifier(n_estimators=n, max_depth=2, random_state=0)
-  X = up_drop_column(train, target)  # Use train, not scaled_train
-  y = up_get_column(train, target)   # Use train, not scaled_train
+  X = up_drop_column(train, target)  
+  y = up_get_column(train, target)   
   clf.fit(X, y)
 
-  k_feature_table = up_drop_column(test, target)  # Use test, not scaled_test
-  k_actuals = up_get_column(test, target)        # Use test, not scaled_test
+  k_feature_table = up_drop_column(test, target) 
+  k_actuals = up_get_column(test, target)       
   probs = clf.predict_proba(k_feature_table)
-  pos_probs = [p for n,p in probs]
+  pos_probs = [p[1] for p in probs]  # Extract probabilities for the positive class (index 1)
 
   all_mets = []
   for t in thresholds:
@@ -102,7 +102,7 @@ def run_random_forest(train, test, target, n):
     all_mets = all_mets + [mets]
 
   metrics_table = up_metrics_table(all_mets)
-  return metrics_table
+  return metrics_tablee
 
 #I'll give you a start
 
